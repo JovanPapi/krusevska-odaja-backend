@@ -67,9 +67,7 @@ export async function populateDatabase() {
     { name: "Dry pepper", nameTranslated: "Сува пиперка" },
   ];
 
-  await Ingredient.truncate().catch((error) =>
-    console.log("Error truncating ingredients:", error)
-  );
+  await Ingredient.truncate().catch((error) => console.log("Error truncating ingredients:", error));
 
   await Ingredient.bulkCreate(listOfIngredients).catch((error) =>
     console.log("Error saving ingredients:", error)
@@ -199,10 +197,7 @@ async function createSalads(ingredientsFromDB: Ingredient[]) {
     });
 
     if (prod.ingredients && prod.ingredients.length > 0) {
-      const ingredientsToAdd = splitIngredients(
-        ingredientsFromDB,
-        prod.ingredients
-      );
+      const ingredientsToAdd = splitIngredients(ingredientsFromDB, prod.ingredients);
       +(
         //TODO: Research for better way for populating many-to-many junction table!
         // I had to implement it this way, BECAUSE TYPESCRIPT DOESNT SUGGEST addListOfIngredients auto generated method from Sequilize.
@@ -453,10 +448,7 @@ async function createAppetizers(ingredientsFromDB: Ingredient[]) {
       description: prod.description,
     });
     if (prod.ingredients && prod.ingredients.length > 0) {
-      const ingredientsToAdd = splitIngredients(
-        ingredientsFromDB,
-        prod.ingredients
-      );
+      const ingredientsToAdd = splitIngredients(ingredientsFromDB, prod.ingredients);
       await (product as any).addListOfIngredients(ingredientsToAdd);
     }
   }
@@ -644,10 +636,7 @@ async function createGrill(ingredientsFromDB: Ingredient[]) {
     });
 
     if (prod.ingredients && prod.ingredients.length > 0) {
-      const ingredientsToAdd = splitIngredients(
-        ingredientsFromDB,
-        prod.ingredients
-      );
+      const ingredientsToAdd = splitIngredients(ingredientsFromDB, prod.ingredients);
       await (product as any).addListOfIngredients(ingredientsToAdd);
     }
   }
@@ -713,10 +702,7 @@ async function createDishesToOrder(ingredientsFromDB: Ingredient[]) {
     });
 
     if (prod.ingredients && prod.ingredients.length > 0) {
-      const ingredientsToAdd = splitIngredients(
-        ingredientsFromDB,
-        prod.ingredients
-      );
+      const ingredientsToAdd = splitIngredients(ingredientsFromDB, prod.ingredients);
       await (product as any).addListOfIngredients(ingredientsToAdd);
     }
   }
@@ -780,10 +766,7 @@ async function createSpecialitiesOfHouse(ingredientsFromDB: Ingredient[]) {
     });
 
     if (prod.ingredients && prod.ingredients.length > 0) {
-      const ingredientsToAdd = splitIngredients(
-        ingredientsFromDB,
-        prod.ingredients
-      );
+      const ingredientsToAdd = splitIngredients(ingredientsFromDB, prod.ingredients);
       await (product as any).addListOfIngredients(ingredientsToAdd);
     }
   }
@@ -827,15 +810,7 @@ async function createCookedDishes(ingredientsFromDB: Ingredient[]) {
       price: 220,
       productCategory: ProductCategory.COOKED_DISHES,
       description: "250g",
-      ingredients: [
-        "tomato",
-        "okra",
-        "zucchini",
-        "peppers",
-        "potato",
-        "carrots",
-        "pea",
-      ],
+      ingredients: ["tomato", "okra", "zucchini", "peppers", "potato", "carrots", "pea"],
     },
     {
       name: "Lean sarma",
@@ -857,14 +832,7 @@ async function createCookedDishes(ingredientsFromDB: Ingredient[]) {
       price: 230,
       productCategory: ProductCategory.COOKED_DISHES,
       description: "250g",
-      ingredients: [
-        "mushrooms",
-        "zucchini",
-        "carrots",
-        "peppers",
-        "olives",
-        "tomato",
-      ],
+      ingredients: ["mushrooms", "zucchini", "carrots", "peppers", "olives", "tomato"],
     },
     {
       name: "Broth",
@@ -872,14 +840,7 @@ async function createCookedDishes(ingredientsFromDB: Ingredient[]) {
       price: 330,
       productCategory: ProductCategory.COOKED_DISHES,
       description: "",
-      ingredients: [
-        "beef",
-        "carrots",
-        "celery",
-        "parsnip",
-        "onion",
-        "accessories",
-      ],
+      ingredients: ["beef", "carrots", "celery", "parsnip", "onion", "accessories"],
     },
     {
       name: "Veal medallions",
@@ -887,14 +848,7 @@ async function createCookedDishes(ingredientsFromDB: Ingredient[]) {
       price: 850,
       productCategory: ProductCategory.COOKED_DISHES,
       description: "250g",
-      ingredients: [
-        "beef",
-        "carrots",
-        "celery",
-        "parsnip",
-        "onion",
-        "accessories",
-      ],
+      ingredients: ["beef", "carrots", "celery", "parsnip", "onion", "accessories"],
     },
   ];
 
@@ -908,10 +862,7 @@ async function createCookedDishes(ingredientsFromDB: Ingredient[]) {
     });
 
     if (prod.ingredients && prod.ingredients.length > 0) {
-      const ingredientsToAdd = splitIngredients(
-        ingredientsFromDB,
-        prod.ingredients
-      );
+      const ingredientsToAdd = splitIngredients(ingredientsFromDB, prod.ingredients);
       await (product as any).addListOfIngredients(ingredientsToAdd);
     }
   }
@@ -1591,10 +1542,7 @@ async function createDrinks() {
   }
 }
 
-function splitIngredients(
-  ingredientsFromDB: Ingredient[],
-  names: string[]
-): Ingredient[] {
+function splitIngredients(ingredientsFromDB: Ingredient[], names: string[]): Ingredient[] {
   const result: Ingredient[] = [];
   for (const ingredient of ingredientsFromDB) {
     if (names.includes(ingredient.name.toLowerCase())) {

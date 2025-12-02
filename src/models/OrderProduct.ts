@@ -6,6 +6,8 @@ import { Product } from "./Product";
 export interface OrderProductAttributes {
   uuid: string;
   quantity: number;
+
+  // FK references
   product_uuid: string;
   order_uuid: string;
   kitchenOrder_uuid: string;
@@ -15,10 +17,7 @@ export interface OrderProductAttributes {
   kitchenOrder?: KitchenOrder;
 }
 
-export type OrderProductCreationAttributes = Optional<
-  OrderProductAttributes,
-  "uuid"
->;
+export type OrderProductCreationAttributes = Optional<OrderProductAttributes, "uuid">;
 
 export class OrderProduct
   extends Model<OrderProductAttributes, OrderProductCreationAttributes>
