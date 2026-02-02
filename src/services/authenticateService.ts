@@ -9,9 +9,7 @@ import { generateToken } from "../utils/jwt";
  *
  * @return {Promise<ServiceResponseDTO>} - DTO that contains statusCode and message of the operation.
  */
-export async function login(
-  credentials: AdminDTO
-): Promise<ServiceResponseDTO> {
+export async function login(credentials: AdminDTO): Promise<ServiceResponseDTO> {
   try {
     const user = await Admin.findOne({
       where: { ...credentials },
@@ -23,9 +21,9 @@ export async function login(
         message: "User not found.",
       };
     }
-
+    // TODO: Update this service method to return logged in user profile and his generated token. CHange this in the internal-work project too!
     const token = generateToken({ ...user });
-    return { statusCode: HTTPStatusCode.OK, message: token };
+    return { statusCode: HTTPStatusCode.OK, data: { user, token } };
   } catch (error) {
     console.error("Error while authorizing:", error);
     return {

@@ -7,5 +7,5 @@ authenticateRouter.post("/authenticate/login", async (req, res) => {
   const { username, password } = req.body;
   const serviceResponse = await login({ username, password });
 
-  return res.status(serviceResponse.statusCode).json(serviceResponse.message);
+  return res.status(serviceResponse.statusCode).json(serviceResponse);
 });
